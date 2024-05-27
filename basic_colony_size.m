@@ -157,6 +157,9 @@ for t = 1:time
 
         final_path = path;
 % Pathline plot
-%        plot(path,0:time,'-o')
+        plot(path,0:time,'-o')
+        xlabel('Position in Colony')
+        ylabel('Time')
+        title('Pathline Plot')
     end
 end
