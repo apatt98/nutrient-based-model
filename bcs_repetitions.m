@@ -23,10 +23,7 @@
 % See also: basic_colony_size
 
 
-
 clf reset
-
-subplot(2,2,1);
 hold on
 
 % ======================================================================
@@ -36,7 +33,6 @@ hold on
 init_size = 5;              % Integer
 time = 60;                  % Integer
 rep = 100;                  % Integer
-pathline = true;            % Boolean
 pathline_vals = 1:5;        % Integer Array
 
 % Nutrient distribution function
@@ -56,50 +52,46 @@ mean_path = zeros(size(pathline_vals,2),time+1);
 % Store length and colony data, and plot number of cells
 for k = 1:rep
     [length, colony_size, final_path] = basic_colony_size(init_size, time, prob, ...
-                            pathline, pathline_vals);
+                            false, pathline_vals);
     multi_len{k} = length;
     multi_col{k} = colony_size;
-    cgr = plot(0:time, length, '-');
     
 % Determine the mean value of position for pathline plot
-    if pathline
-        mean_path = mean_path + final_path;
-    end
+    mean_path = mean_path + final_path;
 end
 
-xlabel('Time Steps')
-ylabel('Yeast Cells')
-title('Colony Growth Repetitions')
-yl = ylim;
-hold off
 
 % ======================================================================
 % Mean Colony Length Plot
 % ======================================================================
 
-acg = subplot(2,2,2);
+mcl = subplot(1,2,1);
 mean_len = cell2mat(multi_len);
 mean_len = sum(mean_len);
 mean_len = mean_len/rep;
-plot(0:time, mean_len, '-', 'LineWidth', 2, 'Color', 'black');
+plot(0:time, mean_len, '-k', 'LineWidth', 2);
+hold on
+for i = 1:rep
+    plot(0:time,multi_len{i,1},'Color',[0 0 1 0.05])
+    hold on
+end
+
 xlabel('Time Steps')
-ylabel('Yeast Cells')
-title('Average Colony Growth')
-ylim(yl);
+ylabel('Colony Height')
+title('Average Colony Growth over Time')
+legend('Mean Colony Height')
 
 % ======================================================================
 % Pathline Plot
 % ======================================================================
 
-if pathline
-    plp = subplot(2,2,[3 4]);
-    mean_path = mean_path/rep;
-    plot(mean_path, 0:time, '-');
-    xlabel('Colony Position')
-    ylabel('Time Steps')
-    title('Pathline Plots')
-    legend(cellstr(num2str(pathline_vals', 'Cell %-d')),'Location','eastoutside')
-end
+mean_path = mean_path/rep;
+plp = subplot(1,2,2);
+plot(mean_path, 0:time, '-');
+xlabel('Colony Position')
+ylabel('Time Steps')
+title('Pathline Plots')
+legend(cellstr(num2str(pathline_vals', 'Cell %-d')),'Location','eastoutside')
 
 % ======================================================================
 % Metrics of final length of colony
