@@ -1,12 +1,9 @@
-# This CITATION.cff file was generated with cffinit.
-# Visit https://bit.ly/cffinit to generate yours today!
-
 cff-version: 1.2.0
-title: Nutrient Diffusion Model
+title: Basic Colony Size Model and Nutrient Diffusion Model for Cylindrical Yeast Growth
 message: >-
   If you use this dataset, please cite it using the metadata
   from this file.
-type: dataset
 authors:
   - given-names: Aidan
     family-names: Patterson
+date-released: 2024
